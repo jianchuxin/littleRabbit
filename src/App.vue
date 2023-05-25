@@ -2,10 +2,6 @@
 
 <template>
   <RouterView />
-
-  <div>
-    <h2>test</h2>
-  </div>
 </template>
 
 <style scoped lang="scss">
