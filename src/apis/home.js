@@ -14,4 +14,11 @@ const findNewAPI = () => {
   });
 };
 
-export { getBannerAPI, findNewAPI };
+// 获取人气推荐信息
+const findHotAPI = () => {
+  return httpInstance({
+    url: "/home/hot",
+  });
+};
+
+export { getBannerAPI, findNewAPI, findHotAPI };
