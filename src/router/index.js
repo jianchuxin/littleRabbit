@@ -32,6 +32,13 @@ const router = createRouter({
       component: Login,
     },
   ],
+  // 路由行为配置
+  scrollBehavior() {
+    return {
+      top: 0,
+      behavior: "smooth",
+    };
+  },
 });
 
 export default router;

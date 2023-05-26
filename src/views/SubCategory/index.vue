@@ -40,7 +40,8 @@ const load = async () => {
   const res = await getSubCategoryAPI(reqData.value);
   goodList.value.push(...res.result.items);
   //没有数据了
-  if (res.items.length === 0) {
+  if (!res.items || res.items.length === 0) {
+    console.log("没数据了");
     disabled.value = true;
   }
 };
