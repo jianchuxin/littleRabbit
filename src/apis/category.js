@@ -9,4 +9,13 @@ const getCategoryBreadAPI = (id) => {
   });
 };
 
-export { getCategoryBreadAPI };
+const getCategoryFilterAPI = (id) => {
+  return httpInstance({
+    url: "/category/sub/filter",
+    params: {
+      id,
+    },
+  });
+};
+
+export { getCategoryBreadAPI, getCategoryFilterAPI };
