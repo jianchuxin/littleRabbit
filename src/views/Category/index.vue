@@ -4,14 +4,18 @@ import { getBannerAPI } from "@/apis/home";
 
 import GoodsItem from "../Home/components/GoodsItem.vue";
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 // 获取数据
 const categoryBread = ref({});
 const route = useRoute();
-const getCategoryBread = async () => {
-  const res = await getCategoryBreadAPI(route.params.id);
+const getCategoryBread = async (id = route.params.id) => {
+  const res = await getCategoryBreadAPI(id);
   categoryBread.value = res.result;
 };
+
+onBeforeRouteUpdate((to) => {
+  getCategoryBread(to.params.id);
+});
 
 // 获取banner
 const bannerList = ref([]);
@@ -52,7 +56,7 @@ onMounted(() => {
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryBread.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="'/category/sub/' + i.id">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
