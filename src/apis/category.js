@@ -18,4 +18,12 @@ const getCategoryFilterAPI = (id) => {
   });
 };
 
-export { getCategoryBreadAPI, getCategoryFilterAPI };
+const getSubCategoryAPI = (data) => {
+  return httpInstance({
+    url: "/category/goods/temporary",
+    method: "POST",
+    data,
+  });
+};
+
+export { getCategoryBreadAPI, getCategoryFilterAPI, getSubCategoryAPI };
