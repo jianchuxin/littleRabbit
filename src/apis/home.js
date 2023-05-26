@@ -1,9 +1,13 @@
 import httpInstance from "@/utils/http";
 
 // 获取banner
-const getBannerAPI = () => {
+const getBannerAPI = (params = {}) => {
+  const { distributionSite = "1" } = params;
   return httpInstance({
     url: "/home/banner",
+    params: {
+      distributionSite,
+    },
   });
 };
 
