@@ -21,4 +21,11 @@ const findHotAPI = () => {
   });
 };
 
-export { getBannerAPI, findNewAPI, findHotAPI };
+//获取商品模块
+const getGoodsAPI = () => {
+  return httpInstance({
+    url: "/home/goods",
+  });
+};
+
+export { getBannerAPI, findNewAPI, findHotAPI, getGoodsAPI };
