@@ -18,7 +18,9 @@ const categoryStore = useCategoryStore();
           v-for="item in categoryStore.categoryList"
           :key="item.id"
         >
-          <RouterLink :to="'/category/' + item.id">{{ item.name }}</RouterLink>
+          <RouterLink :to="'/category/' + item.id" active-class="active">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
       <div class="search">
@@ -74,7 +76,6 @@ const categoryStore = useCategoryStore();
           border-bottom: 1px solid $xtxColor;
         }
       }
-
       .active {
         color: $xtxColor;
         border-bottom: 1px solid $xtxColor;
