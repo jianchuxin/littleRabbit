@@ -1,17 +1,23 @@
 <script setup>
 import { getHotGoodsAPI } from "@/apis/detail";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
+
+const props = defineProps(["type"]);
 
 const hotList = ref([]);
 
+const hotTitle = computed(() => {
+  return props.type === "1" ? "24小时热榜" : "周榜";
+});
 const route = useRoute();
 const params = ref({
   id: route.params.id,
-  type: 1,
+  type: Number(props.type),
 });
+
 const getHotList = async () => {
-  const res = await getHotGoodsAPI(params);
+  const res = await getHotGoodsAPI(params.value);
   hotList.value = res.result;
 };
 
@@ -22,8 +28,10 @@ onMounted(() => {
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ hotTitle }}</h3>
     <!-- 商品区块 -->
+
+    <slot></slot>
     <RouterLink
       to="/"
       class="goods-item"
