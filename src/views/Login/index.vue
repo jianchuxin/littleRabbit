@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from "vue";
-// 表单校验
+// 表单对象
 const form = ref({
   account: "",
   password: "",
   agree: false,
 });
-
+// 校验规则
 const rules = ref({
   account: [
     {
@@ -36,6 +36,15 @@ const rules = ref({
     },
   ],
 });
+
+// 获取form实例做统一校验
+const formRef = ref(null);
+const doLogin = () => {
+  formRef.value.validate((valid) => {
+    // 通过校验 valid = true
+    console.log(valid);
+  });
+};
 </script>
 
 <template>
@@ -60,6 +69,7 @@ const rules = ref({
         <div class="account-box">
           <div class="form">
             <el-form
+              ref="formRef"
               :model="form"
               :rules="rules"
               label-position="right"
@@ -77,7 +87,9 @@ const rules = ref({
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin"
+                >点击登录</el-button
+              >
             </el-form>
           </div>
         </div>
