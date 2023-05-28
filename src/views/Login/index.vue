@@ -1,5 +1,12 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useuserStore } from "@/stores/user";
+import "element-plus/theme-chalk/el-message.css";
+import { ElMessage } from "element-plus";
+
+const userStore = useuserStore();
+
 // 表单对象
 const form = ref({
   account: "",
@@ -39,10 +46,17 @@ const rules = ref({
 
 // 获取form实例做统一校验
 const formRef = ref(null);
+const router = useRouter();
 const doLogin = () => {
-  formRef.value.validate((valid) => {
+  const { account, password } = form.value;
+  formRef.value.validate(async (valid) => {
     // 通过校验 valid = true
-    console.log(valid);
+    // console.log(valid);
+    if (valid) {
+      await userStore.getUserInfo({ account, password });
+      ElMessage({ type: "success", message: "登录成功!" });
+      router.replace("/");
+    }
   });
 };
 </script>
