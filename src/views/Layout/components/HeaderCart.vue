@@ -1,13 +1,35 @@
 <script setup>
 import { useCartStore } from "@/stores/cartStore";
+import { computed } from "vue";
 const cartStore = useCartStore();
+const deleteCart = (id) => {
+  cartStore.deleteCart(id);
+};
+
+const sumCount = computed(() => {
+  let i;
+  let sum = 0;
+  for (i = 0; i < cartStore.cartList.length; i++) {
+    sum += cartStore.cartList[i].count;
+  }
+  return sum;
+});
+
+const sumCost = computed(() => {
+  let i;
+  let sum = 0;
+  for (i = 0; i < cartStore.cartList.length; i++) {
+    sum += cartStore.cartList[i].count * cartStore.cartList[i].price;
+  }
+  return sum;
+});
 </script>
 
 <template>
   <div class="cart">
-    <a class="curr" href="javascript:;">
+    <RouterLink class="curr" to="/cartlist">
       <i class="iconfont icon-cart"></i><em>{{ cartStore.cartList.length }}</em>
-    </a>
+    </RouterLink>
     <div class="layer">
       <div class="list">
         <div class="item" v-for="i in cartStore.cartList" :key="i">
@@ -24,18 +46,20 @@ const cartStore = useCartStore();
               <p class="count">x{{ i.count }}</p>
             </div>
           </RouterLink>
-          <i
-            class="iconfont icon-close-new"
-            @click="store.delCart(i.skuId)"
-          ></i>
+          <i class="iconfont icon-close-new" @click="deleteCart(i.skuId)"></i>
         </div>
       </div>
       <div class="foot">
         <div class="total">
-          <p>共 10 件商品</p>
-          <p>&yen; 100.00</p>
+          <p>共 {{ sumCount }} 件商品</p>
+          <p>&yen; {{ sumCost.toFixed(2) }}</p>
         </div>
-        <el-button size="large" type="primary">去购物车结算</el-button>
+        <el-button
+          size="large"
+          type="primary"
+          @click="$router.push('/cartlist')"
+          >去购物车结算</el-button
+        >
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 // 购物车模块
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useCartStore = defineStore(
@@ -18,7 +18,30 @@ export const useCartStore = defineStore(
       }
     };
 
-    return { cartList, addCart };
+    const deleteCart = (id) => {
+      //   cartList.value = cartList.value.filter((item) => {
+      //     item.skuId !== id;
+      //   });
+      const index = cartList.value.findIndex((item) => item.skuId === id);
+      cartList.value.splice(index, 1);
+    };
+
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => {
+        return item.skuId === skuId;
+      });
+      item.selected = selected;
+    };
+
+    const isAll = computed(() => {
+      return cartList.value.every((item) => item.selected);
+    });
+
+    const allCheck = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected));
+    };
+
+    return { cartList, addCart, deleteCart, singleCheck, isAll, allCheck };
   },
   {
     persist: true,
