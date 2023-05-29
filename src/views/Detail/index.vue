@@ -12,6 +12,7 @@ const categories = ref([]);
 const getGoods = async () => {
   const res = await getDetail(route.params.id);
   goods.value = res.result;
+  console.log(goods);
   categories.value = goods.value.categories;
 };
 
@@ -39,7 +40,7 @@ const addCart = () => {
     cartStore.addCart({
       id: goods.value.id,
       name: goods.value.name,
-      picture: goods.value.picture,
+      picture: goods.value.mainPictures[0],
       price: goods.value.price,
       count: count.value,
       skuId: skuObj.skuId,
