@@ -2,7 +2,7 @@
 import { getDetail } from "@/apis/detail";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useCartStore } from "@/stores/cartStore";
+import { useCartStore } from "@/stores/cart";
 import DetailHot from "./components/DetailHot.vue";
 import { ElMessage } from "element-plus";
 const route = useRoute();
@@ -126,7 +126,7 @@ const addCart = () => {
               <!-- sku组件 -->
               <XtxSku :goods="goods" @change="skuChange" />
               <!-- 数据组件 -->
-              <el-input-number v-model="count" @change="countChange" />
+              <el-input-number v-model="count" @change="countChange" :min="1" />
               <!-- 按钮组件 -->
               <div>
                 <el-button size="large" class="btn" @click="addCart">
