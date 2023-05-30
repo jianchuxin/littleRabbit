@@ -12,7 +12,21 @@ const getCheckInfo = async () => {
   );
 };
 
+// 切换地址弹窗
 const showDialog = ref(false);
+
+// 选中地址项
+const activeAddress = ref({});
+const switchAddress = (item) => {
+  activeAddress.value = item;
+};
+
+//确认地址项
+const confirmAddress = () => {
+  curAddress.value = activeAddress.value;
+  showDialog.value = false;
+  activeAddress.value = {};
+};
 
 onMounted(() => {
   getCheckInfo();
@@ -137,7 +151,9 @@ onMounted(() => {
       <div
         class="text item"
         v-for="item in checkInfo.userAddresses"
+        :class="{ active: activeAddress.id === item.id }"
         :key="item.id"
+        @click="switchAddress(item)"
       >
         <ul>
           <li>
@@ -151,7 +167,7 @@ onMounted(() => {
     <template #footer>
       <span class="dialog-footer">
         <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="confirmAddress">确定</el-button>
       </span>
     </template>
   </el-dialog>
